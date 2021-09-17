@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baseball Game</title>
+    <link rel="stylesheet" type="text/css" href="css/reset.css" />
+    <link rel="stylesheet" type="text/css" href="css/sanitize.css" />
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+</head>
+
+<body>
+    <!-- タイトル + 背景画像-->
+    <div id="pageStart" class="pageStart">
+        <div class="baseball_title">野球ゲーム</div>
+        <p>投手編</p>
+        <!-- 本来ここはタイトル画像 -->
+        <div class="start_btn">
+            <input type="submit" value="スタート" id="startButton" class="start_btn">
+        </div>
+    </div>
+
+    <!-- 文章 -->
+    <div hidden id="text" class="text">
+        <div>
+            <p id="text_1" class="text_p">甲子園決勝９回裏</p>
+            <p>２アウト満塁</p>
+            <br>
+            <p>２ストライク３ボール</p>
+        </div>
+        <div class="next_btn">
+            <input type="submit" value="投球へ進む" id="next_text">
+        </div>
+    </div>
+
+
+
+    <!-- 勝負場面 -->
+    <div hidden id="pagePlaying">
+
+        <div class="pageplay_text">
+            <div>
+                <img src="../js課題/img/baseball_pitcher.png">
+            </div>
+            <div class="page_title">
+                <p class="pagePlaying">投げる球種を決めろ！！</p>
+                <div class="btn_title">
+                    <input type="submit" id="st_btn" class="play_btn" value="ストレート">
+                    <input type="submit" id="ka_btn" class="play_btn" value="カーブ">
+                    <input type="submit" id="fo_btn" class="play_btn" value="フォーク">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 投げる画像 -->
+
+
+    <!-- バットに当たるかの画像 -->
+    <div id="batting" class="hit_title">
+        <div hidden id="bat_hit" class="bat_hit">カキーン！？</div>
+        <div hidden id="n_bat_hit" class="n_bat_hit">スカッ</div>
+        <!-- ここの下は当たらなかった時のボタンです、※ボタンのクラスを同じにしているためスタイルはクラスを使う -->
+        <div hidden class="next_btn_2">
+            <input type="submit" id="next_btn_2" class="btn_btn" value="▷">
+        </div>
+        <!-- ここの下は当たった時用のボタンです、※ボタンのクラスを同じにしているためスタイルはクラスを使う -->
+        <div hidden class="next_btn_3">
+            <input type="submit" id="next_btn_3" class="btn_btn" value="▷">
+        </div>
+    </div>
+
+
+    <!-- 当たった → ファールorホームラン → 結果 -->
+    <!-- 三振の時の結果ボタン↓ -->
+    <div hidden class="result_btn">
+        <input type="submit" id="result_btn" class="result_btn" value="結果へ">
+    </div>
+    <!-- ホームランの時の結果ボタン↓ -->
+    <div hidden class="Btn_make">
+        <input type="submit" id="Btn_make" class="makeBtn" value="結果へ">
+    </div>
+    <!-- ファールの時のもう一度ボタン -->
+    <div hidden class="Btn_faul">
+        <input type="submit" id="Btn_faul" class="re_btn" value="もう一度">
+    </div>
+
+    <!-- 当たらなかった → 結果 -->
+    <div hidden class="result_win" id="result_win">✨勝利✨</div>
+    <div hidden class="result_lose" id="result_lose">😱敗北😱</div>
+    <div hidden class="result_hikiwake" id="result_hikiwake">もう一度</div>
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <script>
+        // ここに処理を追加
+
+        // スタートボタンを押してタイトル画面から文章画面に切り替える
+        $("#startButton").on("click", function () {
+            $("#pageStart").fadeOut(2000);
+            $("#text").fadeIn(3000);
+            $("#bbttnn").hide();
+        });
+
+        // 文章の画面から勝負の画面へ切り替え
+        $("#next_text").on("click", function () {
+            $("#text").hide();
+            $("#pagePlaying").show();
+
+        });
+
+
+        // 投げる球種を決めろ！！
+
+        // 自分がストレートを投げたら
+        $("#st_btn").on("click", function () {
+
+            // $("#pageStart").hide();
+            // $("#text").hide();
+            $("#pagePlaying").fadeOut(1000);
+            // 相手がランダムで打つ
+            const randomNum = Math.ceil(Math.random() * 2);
+
+            if (randomNum == 1) {
+                // $("#com_bat").text("三振");
+                // $("#result").text("勝ち");
+                $("#n_bat_hit").show();//スカっ
+                $(".next_btn_2").show();
+                $(".next_btn_2").fadeIn(1000);
+                $(".next_btn_3").hide();
+            } else if (randomNum > 1) {
+                // $("#").text("ホームラン、ファール");
+                // $("#").text("負け、もう一回");
+                $("#bat_hit").show();//カキーン
+                $(".next_btn_2").hide();
+                $(".next_btn_3").show();
+                $(".next_btn_3").fadeIn(1000);
+            }
+        });
+
+        // 自分がカーブを投げたら
+        $("#ka_btn").on("click", function () {
+
+            // $("#pageStart").hide();
+            // $("#text").hide();
+            $("#pagePlaying").fadeOut(1000);
+            // ここで画像が表示される$("#").show();
+
+            // 相手がランダムで打つ
+            const randomNum = Math.ceil(Math.random() * 3);
+
+            if (randomNum == 1) {
+                $("#com_bat").text("三振");
+                $("#result").text("勝ち");
+                $("#n_bat_hit").show();//スカっ
+                $(".next_btn_2").show();//次へボタン
+                $(".next_btn_2").fadeIn(1000);
+                $(".next_btn_3").hide();
+
+            } else if (randomNum > 1) {
+                // $("#com_bat").text("ホームラン、ファール");
+                // $("#result").text("負け、もう一回");
+                $("#bat_hit").show();//カキーン
+                $(".next_btn_2").hide();//次へボタン
+                $(".next_btn_3").show();
+                $(".next_btn_3").fadeIn(1000);
+
+            }
+        });
+
+        // 自分がフォークを投げたら
+        $("#fo_btn").on("click", function () {
+
+            // $("#pageStart").hide();
+            // $("#text").hide();
+            $("#pagePlaying").fadeOut(1000);
+            // ここで画像が表示される$("#").show();
+
+            // 相手がランダムで打つ
+
+            const randomNum = Math.ceil(Math.random() * 4);
+
+            if (randomNum == 1) {
+                // $("#com_bat").text("三振");
+                // $("#result").text("勝ち");
+                $("#n_bat_hit").show();//スカっ
+                $(".next_btn_2").show();//次へボタン
+                $(".next_btn_2").fadeIn(1000);
+                $(".next_btn_3").hide();
+
+
+            } else if (randomNum > 1) {
+                // ホームラン、ファールの時
+                // $("#com_bat").text("ホームラン、ファール");
+                // $("#result").text("負け、もう一回");
+                $("#bat_hit").show();//カキーン
+                $(".next_btn_2").hide();
+                $(".next_btn_3").show();//次へボタン
+                $(".next_btn_3").fadeIn(1000);
+            }
+        });
+
+
+        // 当たったか当たってないかの判断が終わってボタンを押した時(.next_btn_2)
+        const kati = "三振！！"
+        $("#next_btn_2").on("click", function () {
+            $("#n_bat_hit").text(kati);
+            $("#next_btn_2").fadeOut(2000);
+            $("#n_bat_hit").fadeIn(4000);
+            $("#text").hide();
+        });
+        //結果ボタンを表示する
+        $(".next_btn_2").on("click", function () {
+            $(".result_btn").fadeIn(8000);
+        });
+        //結果ボタンを押す
+        $(".result_btn").on("click", function () {
+            $("#batting").fadeOut(3000);
+            $(".result_btn").hide();
+            $(".result_win").show();
+
+        });
+
+
+        //上と一緒(.next_btn_3押した時)
+        const make = "ホームラン"
+        const hikiwake = "ファール"
+
+
+        $("#next_btn_3").on("click", function () {
+
+            const num3 = Math.ceil(Math.random() * 2);
+
+            if (num3 == 1) {
+                // $("#").text(make);//負けの時
+                // $("#result").text("負け");
+
+                $("#bat_hit").text(make);//カキーンのテキストをホームランに変更
+                $(".next_btn_3").fadeOut(2000);
+                $(".Btn_make").show();
+                $(".Btn_make").fadeIn(8000);//ホームランの時の結果ボタン
+            } else if (num3 > 1) {
+                $("#bat_hit").text(hikiwake);//カキーンのテキストをファールに変更
+                $(".next_btn_3").fadeOut(2000);
+                $(".Btn_faul").show();
+                $(".Btn_faul").fadeIn();//ファールの時のもう一度ボタン
+            }
+
+        });
+        //ホームランの場合結果ボタンを押す
+        $(".Btn_make").on("click", function () {
+            $("#batting").fadeOut(2000);
+            $(".Btn_make").hide();
+            $(".result_lose").show();
+        });
+
+        $(".Btn_faul").on("click", function () {
+            $(".Btn_faul").hide();
+            $("#bat_hit").hide();
+            $("#pagePlaying").fadeIn(2000);
+        });
+
+
+    </script>
+</body>
+
+</html>
